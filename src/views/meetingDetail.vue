@@ -1,32 +1,37 @@
 <template>
-    <div class="meeting-form">
-        <h3>{{meetingDetail.confName}}</h3>
-        {{meetingDetail.startDate | formatDate}} | {{meetingDetail.duration}}分钟 | {{meetingDetail.status=="Scheduled"?"未开始":"已结束"}}
-        <br>
-        <br>
-        <el-form ref="meetingDetail" :model="meetingDetail" label-width="80px">
-            <el-form-item label="主持人">
-                <el-input type="text" value="张三"></el-input>
-            </el-form-item>
-            <el-form-item label="会议链接">
-                <el-input type="text" v-model="meetingUrl"></el-input>
-            </el-form-item>
-             <el-form-item label="会议人员">
-                <el-input type="text" value=""></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button size="large" type="primary" @click="beginMeeting">开始会议</el-button>
-            </el-form-item>
-        </el-form>
-    </div>
+<el-row>
+  <el-col>
+    <el-dialog :title="meetingDetail.confName" :visible.sync="detailTableVisible" :before-close="handleClose" size="small">
+        <div class="meeting-form">
+            {{meetingDetail.startDate | formatDate}} | {{meetingDetail.duration}}分钟 | {{meetingDetail.status=="Scheduled"?"未开始":"已结束"}}
+            <br>
+            <br>
+            <el-form ref="meetingDetail" :model="meetingDetail" label-width="80px">
+                <el-form-item label="主持人">
+                    <el-input type="text" value="张三"></el-input>
+                </el-form-item>
+                <el-form-item label="会议链接">
+                    <el-input type="text" :value="meetingUrl"></el-input>
+                </el-form-item>
+                 <el-form-item label="会议人员">
+                    <el-input type="text" value=""></el-input>
+                </el-form-item>
+                <!-- <el-form-item>
+                    <el-button size="large" type="primary" @click="beginMeeting">开始会议</el-button>
+                </el-form-item> -->
+            </el-form>
+        </div>
+    </el-dialog>
+  </el-col>
+</el-row>
 </template>
 
 <script>
     export default{
+        props:['detailTableVisible','meetingId'],
         data(){
             return{
-                meetingId:"",
-                meetingUrl:"http://localhost:8010/#/partner/",
+                meetingUrl:"",
                 meetingDetail:{
                     meetingKey: "22664992",
                     confName: "test",
@@ -55,11 +60,41 @@
         methods:{
             beginMeeting(){
                 
+            },
+            handleClose(done){
+                this.$emit('close')
+                console.log("close be called")
+                // this.detailTableVisible=false
+                // this.$confirm('确认关闭？')
+                //   .then(_ => {
+                //     done();
+                //   })
+                //   .catch(_ => {});
             }
         },
         watch:{
             meetingId(val){
-                this.meetingUrl = this.meetingUrl+val
+                this.meetingUrl = "http://localhost:8010/#/partner/"+val
+            },
+            detailTableVisible(val){
+                if (val) {
+                    console.log("is show ",val)
+                    if (this.meetingId!="") {
+                        console.log("id is ",this.meetingId)
+                        var url = "http://cloud7.cc:8101/api/services/app/meeting/GetMeeting?meetingId="+this.meetingId
+                        this.$ajax.get(url)
+                        .then(res=>{
+                            this.meetingDetail = res.data.result
+                            console.log(res)
+                        })
+                        .catch(error=>{
+                            console.log(error)
+                        })
+                    }
+                    else{
+                        console.log("id is null")
+                    }
+                }
             }
         },
         filters:{
@@ -73,16 +108,8 @@
             }
         },
         mounted(){
-            this.meetingId = this.$route.query.meetingId
-            var url = "http://192.168.1.126:8099/api/services/app/meeting/GetMeeting?meetingId="+this.meetingId
-            this.$ajax.get(url)
-            .then(res=>{
-                this.meetingDetail = res.data.result
-                console.log(res)
-            })
-            .catch(error=>{
-                console.log(error)
-            })
+            // this.meetingId = this.$route.query.meetingId
+            
         }
     }
 </script>

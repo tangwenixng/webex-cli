@@ -1,0 +1,48 @@
+meetings:[
+  {
+    meetingId: 32,
+    meetingKey: "24207647",
+    confName: "string",
+    startDate: "2017-08-16 05:39:41",
+    duration: 60,
+    endDate: "2017-08-16T06:39:41",
+    status: "Scheduled",
+    attendees: null,
+    roomInfo: {
+      id: 2,
+      roomName: "会议室143865",
+      roomSize: 25
+    }
+  },
+  {
+    meetingId: 23,
+    meetingKey: "24207647",
+    confName: "string",
+    startDate: "2017-08-16 05:39:41",
+    duration: 60,
+    endDate: "2017-08-16T06:39:41.443",
+    status: "Scheduled",
+    attendees: null,
+    roomInfo: {
+      id: 2,
+      roomName: "会议室143865",
+      roomSize: 25
+    }
+  },
+  {
+    meetingId: 9,
+    meetingKey: "24207647",
+    confName: "string",
+    startDate: "2017-08-16 05:39:41",
+    duration: 60,
+    endDate: "2017-08-16T06:39:41.443",
+    status: "Scheduled",
+    attendees: null,
+    roomInfo: {
+      id: 2,
+      roomName: "会议室143865",
+      roomSize: 25
+    }
+  }
+]
+                    
