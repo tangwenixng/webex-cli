@@ -1,3 +1,4 @@
+//参会者界面
 <template>
     <div class="partner">
         <el-form ref="meeting" :model="meeting" label-width="80px">
