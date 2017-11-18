@@ -1,6 +1,13 @@
 # webex-cli
 
 > A Vue.js project
+使用vue-cli脚手架搭建的项目
+
+集成ElementUI、router路由、使用axios发起ajax请求
+
+父子组件通信在每个页面都有哦
+
+项目中call的API 因为隐私，不能提供、抱歉。
 
 ## Build Setup
 
